@@ -1,0 +1,52 @@
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: white;
+  padding: 12px 20px;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.icon { font-size: 1.2rem; }
+.pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fca5a5;
+  animation: blink 1s infinite;
+}
+.text {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+.dots { animation: ellipsis 1.5s infinite; }
+.sub {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  font-weight: 400;
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes ellipsis {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}

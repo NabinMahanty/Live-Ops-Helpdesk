@@ -1,0 +1,96 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.row:hover {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(148, 163, 184, 0.15);
+  transform: translateY(-1px);
+}
+.locked {
+  background: rgba(100, 116, 139, 0.12) !important;
+  border-color: rgba(148, 163, 184, 0.08) !important;
+  opacity: 0.65;
+}
+.locked:hover { transform: none; }
+.myLock {
+  border-color: rgba(96, 165, 250, 0.35) !important;
+  background: rgba(96, 165, 250, 0.08) !important;
+}
+.left { flex: 1; min-width: 0; }
+.titleLine { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.lockIcon { font-size: 1rem; flex-shrink: 0; }
+.title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+.customer, .time { white-space: nowrap; }
+.resolved { color: #22c55e; font-weight: 600; }
+.lockedBy {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #f59e0b;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+.right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.priority {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.editBtn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.editBtn:hover:not(.disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+}
+.disabled {
+  background: #334155 !important;
+  color: #64748b !important;
+  cursor: not-allowed !important;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 640px) {
+  .row { flex-direction: column; align-items: flex-start; }
+  .right { width: 100%; justify-content: space-between; margin-top: 10px; }
+}
