@@ -1,12 +1,14 @@
 "use client";
+
 import { useSocket } from "@/context/SocketContext";
+import { Lock, Edit, Building, Clock, CheckCircle } from "./Icons";
 import styles from "./TicketRow.module.css";
 
 const priorityConfig = {
-  critical: { label: "CRITICAL", color: "#ef4444", bg: "rgba(239,68,68,0.12)" },
-  high: { label: "HIGH", color: "#f59e0b", bg: "rgba(245,158,11,0.12)" },
-  medium: { label: "MEDIUM", color: "#3b82f6", bg: "rgba(59,130,246,0.12)" },
-  low: { label: "LOW", color: "#22c55e", bg: "rgba(34,197,94,0.12)" },
+  critical: { label: "CRITICAL", color: "var(--status-open)", bg: "var(--status-open-bg)", border: "var(--status-open-border)" },
+  high: { label: "HIGH", color: "var(--status-locked)", bg: "var(--status-locked-bg)", border: "var(--status-locked-border)" },
+  medium: { label: "MEDIUM", color: "var(--status-low)", bg: "var(--status-low-bg)", border: "var(--status-low-border)" },
+  low: { label: "LOW", color: "var(--status-resolved)", bg: "var(--status-resolved-bg)", border: "var(--status-resolved-border)" },
 };
 
 export default function TicketRow({ ticket, onEdit }) {
@@ -36,14 +38,25 @@ export default function TicketRow({ ticket, onEdit }) {
     <div className={`${styles.row} ${isLocked && !isMyLock ? styles.locked : ""} ${isMyLock ? styles.myLock : ""}`} id={`ticket-row-${ticket.id}`}>
       <div className={styles.left}>
         <div className={styles.titleLine}>
-          {isLocked && !isMyLock && <span className={styles.lockIcon}>🔒</span>}
-          {isMyLock && <span className={styles.lockIcon}>✏️</span>}
+          {isLocked && !isMyLock && <Lock className={styles.lockIcon} />}
+          {isMyLock && <Edit className={styles.myLockIcon} />}
           <h3 className={styles.title}>{ticket.title}</h3>
         </div>
         <div className={styles.meta}>
-          <span className={styles.customer}>🏢 {ticket.customer}</span>
-          <span className={styles.time}>🕐 {timeAgo(ticket.createdAt)}</span>
-          {ticket.status === "resolved" && <span className={styles.resolved}>✅ Resolved</span>}
+          <span className={styles.customer}>
+            <Building className={styles.metaIcon} />
+            <span>{ticket.customer}</span>
+          </span>
+          <span className={styles.time}>
+            <Clock className={styles.metaIcon} />
+            <span>{timeAgo(ticket.createdAt)}</span>
+          </span>
+          {ticket.status === "resolved" && (
+            <span className={styles.resolved}>
+              <CheckCircle className={styles.resolvedIcon} />
+              <span>Resolved</span>
+            </span>
+          )}
         </div>
         {isLocked && !isMyLock && (
           <div className={styles.lockedBy}>
@@ -52,7 +65,7 @@ export default function TicketRow({ ticket, onEdit }) {
         )}
       </div>
       <div className={styles.right}>
-        <span className={styles.priority} style={{ color: pri.color, background: pri.bg }}>
+        <span className={styles.priority} style={{ color: pri.color, background: pri.bg, border: `1px solid ${pri.border}` }}>
           {pri.label}
         </span>
         <button

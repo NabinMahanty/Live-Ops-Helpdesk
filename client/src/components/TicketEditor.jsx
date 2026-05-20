@@ -1,6 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import { useSocket } from "@/context/SocketContext";
+import { Building } from "./Icons";
 import styles from "./TicketEditor.module.css";
 
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000";
@@ -42,23 +44,34 @@ export default function TicketEditor({ ticket, onClose }) {
         <div className={styles.header}>
           <div>
             <h2 className={styles.title}>{ticket.title}</h2>
-            <p className={styles.sub}>Editing as <strong>{agentName}</strong></p>
+            <p className={styles.sub}>
+              Editing as <strong className={styles.agentHighlight}>{agentName}</strong>
+            </p>
           </div>
-          <button className={styles.closeBtn} onClick={handleClose} id="close-editor-btn">&times;</button>
+          <button className={styles.closeBtn} onClick={handleClose} id="close-editor-btn">
+            &times;
+          </button>
         </div>
         <div className={styles.body}>
           <div className={styles.details}>
             <div className={styles.field}>
               <label>Customer</label>
-              <span>🏢 {ticket.customer}</span>
+              <span className={styles.fieldVal}>
+                <Building className={styles.fieldIcon} /> {ticket.customer}
+              </span>
             </div>
             <div className={styles.field}>
               <label>Priority</label>
-              <span className={styles[ticket.priority]}>{ticket.priority.toUpperCase()}</span>
+              <span className={`${styles.priorityBadge} ${styles[ticket.priority]}`}>
+                {ticket.priority.toUpperCase()}
+              </span>
             </div>
             <div className={styles.field}>
               <label>Status</label>
-              <span>{ticket.status === "resolved" ? "✅ Resolved" : "🔴 Open"}</span>
+              <span className={`${styles.statusBadge} ${ticket.status === "resolved" ? styles.statusResolved : styles.statusOpen}`}>
+                <span className={styles.statusDot}></span>
+                {ticket.status === "resolved" ? "Resolved" : "Open"}
+              </span>
             </div>
           </div>
           <div className={styles.descSection}>
@@ -66,22 +79,24 @@ export default function TicketEditor({ ticket, onClose }) {
             <p className={styles.desc}>{ticket.description}</p>
           </div>
           <div className={styles.resSection}>
-            <label htmlFor="resolution-textarea">Resolution</label>
+            <label htmlFor="resolution-textarea">Resolution Update</label>
             <textarea
               id="resolution-textarea"
               className={styles.textarea}
               value={resolution}
               onChange={(e) => setResolution(e.target.value)}
-              placeholder="Type your resolution here..."
+              placeholder="Provide a clear description of the resolution..."
               rows={5}
               autoFocus
             />
           </div>
         </div>
         <div className={styles.footer}>
-          <button className={styles.cancelBtn} onClick={handleClose} id="cancel-editor-btn">Cancel</button>
+          <button className={styles.cancelBtn} onClick={handleClose} id="cancel-editor-btn">
+            Cancel
+          </button>
           <button className={`${styles.saveBtn} ${saved ? styles.savedBtn : ""}`} onClick={handleSave} disabled={saving || saved} id="save-editor-btn">
-            {saved ? "✅ Saved!" : saving ? "Saving..." : "Save Resolution"}
+            {saved ? "Saved Successfully" : saving ? "Saving..." : "Save Resolution"}
           </button>
         </div>
       </div>

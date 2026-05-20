@@ -1,5 +1,7 @@
 "use client";
+
 import { useSocket } from "@/context/SocketContext";
+import { AlertTriangle } from "./Icons";
 import styles from "./ConnectionBanner.module.css";
 
 export default function ConnectionBanner() {
@@ -10,7 +12,7 @@ export default function ConnectionBanner() {
   return (
     <div className={styles.banner} role="alert" id="connection-banner">
       <div className={styles.inner}>
-        <span className={styles.icon}>⚠️</span>
+        <AlertTriangle className={styles.warningIcon} />
         <span className={styles.pulse}></span>
         <span className={styles.text}>
           Connection Lost: Reconnecting<span className={styles.dots}>...</span>
