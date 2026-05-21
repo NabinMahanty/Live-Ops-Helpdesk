@@ -18,13 +18,7 @@ const { v4: uuidv4 } = require('uuid');
 const app = express();
 const server = http.createServer(app);
 
-// ─── CORS Configuration ───────────────────────────────────────────
-const ALLOWED_ORIGINS = [
-  process.env.CLIENT_URL || 'http://localhost:3000',
-  // Add production Vercel URL here when deploying
-].filter(Boolean);
-
-app.use(cors({ origin: ALLOWED_ORIGINS, credentials: true }));
+app.use(cors());
 app.use(express.json());
 
 const io = new Server(server, {
